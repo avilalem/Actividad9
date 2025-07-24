@@ -29,12 +29,35 @@ def registrar_cliente():
         destinos=registrar_destinos(cantidad_destinos)
         cliente[codigo_cliente]={
             "nombre":nombre,
-            "destino":destinos
+            "destinos":destinos
         }
-def mostrar_cliente(cliente, codigos=None, indice=0):
+def contar_destinos(cliente):
+    total=0
+    for datos in cliente.values():
+        total += len(datos["nobre_destino"])
+    return total
+
+def cliente_mas_destinos(cliente):
+    max_destinos=0
+    nombre_cliente=""
+    for datos in cliente.values():
+        cantidad=len(datos["destinos"])
+        if cantidad>max_destinos:
+            max_destinos=cantidad
+            nombre_cliente=datos["nombre"]
+        return nombre_cliente, max_destinos
+
+
+def mostrar_cliente(cliente):
     if not cliente:
-        print("No hay clientes registrados")
+        print("No hay estudiantes registrados")
         return
-    if codigos is None:
-        codigos=list(cliente.keys())
-        print("*** Listado de Clientes y Destinos Visitados ***")
+    print("Lista de clientes:")
+    for codigo,datos in cliente.items():
+        print(f"{codigo}: - Nombre: {datos['nombre']}")
+        destinos=datos["destinos"]
+        if destinos:
+            print(f"Destinos: {destinos['nobre_destino']}")
+        else:
+            print("No hay destinos")
+
