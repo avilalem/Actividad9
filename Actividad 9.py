@@ -1,4 +1,14 @@
-def registrar_cliente(cliente):
+def registrar_destinos(cantidad_destinos):
+        if cantidad_destinos ==0:
+            return {}
+        else:
+            destinos=registrar_destinos(cantidad_destinos-1)
+            nombre_destino=input("Ingrese el nombre del destino: ")
+            destinos[nombre_destino]={"nobre_destino":nombre_destino}
+            return destinos
+
+def registrar_cliente():
+    cliente={}
     try:
         cantidad=int(input("Cuantos clientes desea ingresar?: "))
     except ValueError:
@@ -16,24 +26,15 @@ def registrar_cliente(cliente):
         except ValueError:
             print("El valor ingresado no es valido")
             return
-        destinos={}
-        for i in range(cantidad_destinos):
-            nombre_destinos=input(f"Ingrese nombre del destino#{i+1}: ")
-            destinos[nombre_destinos]={
-                "destino":nombre_destinos
-            }
+        destinos=registrar_destinos(cantidad_destinos)
         cliente[codigo_cliente]={
             "nombre":nombre,
             "destino":destinos
         }
-def mostrar_cliente(cliente):
+def mostrar_cliente(cliente, codigos=None, indice=0):
     if not cliente:
         print("No hay clientes registrados")
         return
-    print("*** Listado de Clientes y Destinos Visitados ***")
-    for codigo_cliente,datos in cliente:
-        print(f"{codigo_cliente}: {cliente[codigo_cliente]}")
-        destinos=datos.get["destino",{}]
-        if destinos:
-            for cosa, in destinos.items():
-                print(f"Destino: {destino}")
+    if codigos is None:
+        codigos=list(cliente.keys())
+        print("*** Listado de Clientes y Destinos Visitados ***")
